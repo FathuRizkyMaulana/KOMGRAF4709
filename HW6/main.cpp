@@ -13,19 +13,19 @@ void multiplyMatrices(float a[3][3], float b[3][3], float result[3][3]) {
     }
 }
 
-// Fungsi untuk melakukan scaling menggunakan matriks 3x3
-void scale(float points[3][1], float scaleX, float scaleY) {
-    float scalingMatrix[3][3] = {
-        {scaleX, 0, 0},
-        {0, scaleY, 0},
+// Fungsi untuk melakukan translasi menggunakan matriks 3x3
+void translate(float points[3][1], float tx, float ty) {
+    float translationMatrix[3][3] = {
+        {1, 0, tx},
+        {0, 1, ty},
         {0, 0, 1}
     };
 
-    // Menampilkan matriks scaling
-    std::cout << "Matriks Scaling:\n";
+    // Menampilkan matriks translasi
+    std::cout << "Matriks Translasi:\n";
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
-            std::cout << scalingMatrix[i][j] << " ";
+            std::cout << translationMatrix[i][j] << " ";
         }
         std::cout << "\n";
     }
@@ -36,12 +36,12 @@ void scale(float points[3][1], float scaleX, float scaleY) {
         for (int j = 0; j < 1; ++j) {
             result[i][j] = 0;
             for (int k = 0; k < 3; ++k) {
-                result[i][j] += scalingMatrix[i][k] * points[k][j];
+                result[i][j] += translationMatrix[i][k] * points[k][j];
             }
         }
     }
 
-    // Update koordinat titik setelah scaling
+    // Update koordinat titik setelah translasi
     for (int i = 0; i < 3; ++i) {
         points[i][0] = result[i][0];
     }
@@ -56,12 +56,12 @@ int main() {
 
     std::cout << "Koordinat awal: (" << points[0][0] << ", " << points[1][0] << ")\n";
 
-    float scaleX = 2.0f;
-    float scaleY = 3.0f;
+    float tx = 3.0f;
+    float ty = 3.0f;
 
-    scale(points, scaleX, scaleY);
+    translate(points, tx, ty);
 
-    std::cout << "Koordinat setelah scaling: (" << points[0][0] << ", " << points[1][0] << ")\n";
+    std::cout << "Koordinat setelah translasi: (" << points[0][0] << ", " << points[1][0] << ")\n";
 
     return 0;
 }
