@@ -13,22 +13,19 @@ void multiplyMatrices(float a[3][3], float b[3][3], float result[3][3]) {
     }
 }
 
-// Fungsi untuk melakukan rotasi menggunakan matriks 3x3
-void rotate(float points[3][1], float angle, float pivotX, float pivotY) {
-    // Konversi sudut dari derajat ke radian
-    float radian = angle * (M_PI / 180.0);
-
-    float rotationMatrix[3][3] = {
-        {cos(radian), -sin(radian), pivotX * (1 - cos(radian)) + pivotY * sin(radian)},
-        {sin(radian), cos(radian), pivotY * (1 - cos(radian)) - pivotX * sin(radian)},
+// Fungsi untuk melakukan scaling menggunakan matriks 3x3
+void scale(float points[3][1], float scaleX, float scaleY) {
+    float scalingMatrix[3][3] = {
+        {scaleX, 0, 0},
+        {0, scaleY, 0},
         {0, 0, 1}
     };
 
-    // Menampilkan matriks rotasi
-    std::cout << "Matriks Rotasi:\n";
+    // Menampilkan matriks scaling
+    std::cout << "Matriks Scaling:\n";
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
-            std::cout << rotationMatrix[i][j] << " ";
+            std::cout << scalingMatrix[i][j] << " ";
         }
         std::cout << "\n";
     }
@@ -39,12 +36,12 @@ void rotate(float points[3][1], float angle, float pivotX, float pivotY) {
         for (int j = 0; j < 1; ++j) {
             result[i][j] = 0;
             for (int k = 0; k < 3; ++k) {
-                result[i][j] += rotationMatrix[i][k] * points[k][j];
+                result[i][j] += scalingMatrix[i][k] * points[k][j];
             }
         }
     }
 
-    // Update koordinat titik setelah rotasi
+    // Update koordinat titik setelah scaling
     for (int i = 0; i < 3; ++i) {
         points[i][0] = result[i][0];
     }
@@ -59,13 +56,12 @@ int main() {
 
     std::cout << "Koordinat awal: (" << points[0][0] << ", " << points[1][0] << ")\n";
 
-    float angle = 45.0f;
-    float pivotX = 3.0f;
-    float pivotY = 3.0f;
+    float scaleX = 2.0f;
+    float scaleY = 3.0f;
 
-    rotate(points, angle, pivotX, pivotY);
+    scale(points, scaleX, scaleY);
 
-    std::cout << "Koordinat setelah rotasi: (" << points[0][0] << ", " << points[1][0] << ")\n";
+    std::cout << "Koordinat setelah scaling: (" << points[0][0] << ", " << points[1][0] << ")\n";
 
     return 0;
 }
